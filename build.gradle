@@ -30,3 +30,30 @@ dependencies {
 // Define the main class for the application
 mainClassName = 'App'
 
+version             = '0.0.1'
+group               = 'com.prz'  
+sourceCompatibility = '1.8'
+
+apply plugin: 'maven-publish'
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			artifact("build/libs/gradle-nexus-$version" + ".jar") {
+				extension 'jar'
+			}
+		}
+	}
+
+	repositories {
+		maven {
+			name 'nexus'
+			url "http://localhost:8081/repository/maven-releases/"
+
+			credentials {
+				username project.repoUser
+				password project.repoPassword
+			}
+		}
+	}
+}
